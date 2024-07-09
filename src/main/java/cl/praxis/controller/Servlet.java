@@ -29,38 +29,42 @@ public class Servlet extends HttpServlet {
 		String numero2 = req.getParameter("numero2");
 		String accion = req.getParameter("operacion");
 		String respuesta = "";
+		boolean enviarDispacher = true;
 		if (!calculadora.validarEnteros(numero1, numero2)) {
-
+			enviarDispacher = false;
 			resp.sendRedirect("error.html");
+
+		} else {
+			if (accion.equals("suma")) {
+		
+			respuesta = calculadora.sumar(Integer.parseInt(numero1), Integer.parseInt(numero2));
+
+		} else if (accion.equals("resta")) {
+			respuesta = calculadora.restar(Integer.parseInt(numero1), Integer.parseInt(numero2));
+
+		} else if (accion.equals("multiplicacion")) {
+			respuesta = calculadora.multiplicar(Integer.parseInt(numero1), Integer.parseInt(numero2));
+
 		} else if (accion.equals("division")) {
-			if (!calculadora.esCero(numero2)) {
+			if (calculadora.esCero(Integer.parseInt(numero2))) {
+				enviarDispacher= false;
 				resp.sendRedirect("error.html");
-			}else {
+			} else {
 				respuesta = calculadora.dividir(Integer.parseInt(numero1), Integer.parseInt(numero2));
 			}
-		} else {
-			
 
-			if (accion.equals("suma")) {
+		} else if (accion.equals("ordenarNumero")) {
+			respuesta = calculadora.ordenarNumero(Integer.parseInt(numero1), Integer.parseInt(numero2));
 
-				respuesta = calculadora.sumar(Integer.parseInt(numero1), Integer.parseInt(numero2));
+		} else if (accion.equals("parOImpar")) {
+			respuesta = calculadora.parOImpar(Integer.parseInt(numero1), Integer.parseInt(numero2));
 
-			} else if (accion.equals("resta")) {
-				respuesta = calculadora.restar(Integer.parseInt(numero1), Integer.parseInt(numero2));
+		}
 
-			} else if (accion.equals("multiplicacion")) {
-				respuesta = calculadora.multiplicar(Integer.parseInt(numero1), Integer.parseInt(numero2));
-
-			} else  if (accion.equals("ordenarNumero")) {
-				respuesta = calculadora.ordenarNumero(Integer.parseInt(numero1), Integer.parseInt(numero2));
-
-			} else if (accion.equals("parOImpar")) {
-				respuesta = calculadora.parOImpar(Integer.parseInt(numero1), Integer.parseInt(numero2));
-
-			}
-
+		if (enviarDispacher) {
 			req.setAttribute("respuesta", respuesta);
 			getServletContext().getRequestDispatcher("/respuesta.jsp").forward(req, resp);
 		}
 	}
+}
 }

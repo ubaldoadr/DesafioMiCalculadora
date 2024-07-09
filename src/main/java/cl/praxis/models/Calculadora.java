@@ -25,9 +25,9 @@ public class Calculadora {
 
     public  String ordenarNumero(int valor1, int valor2) {
     	if (valor1<valor2) {
-    		return "los numeros ordenados son: " + valor1+ " " + valor2;
+    		return "los numeros ordenados son: " + valor1 + " - " + valor2;
 		}else {
-			return "los numeros ordenados son: " + valor2+ " " + valor1;
+			return "los numeros ordenados son: " + valor2+ " - " + valor1;
 		}    	
      }
     
@@ -42,20 +42,11 @@ public class Calculadora {
     	return "El numero " +valor2 +" Es par y el numero "+valor1+ " Es impar" ;
      }
     
-    public boolean esCero (String valor2) {
-    	boolean resultado;
-
-		try {
-			int aux= Integer.parseInt(valor2);
-			if(aux==0) {
-			resultado = true;
-			}
-			resultado =false;
-		} catch (NumberFormatException excepcion) {
-			
-			resultado = false;
-		}
-		return resultado;
+    public boolean esCero (int valor2) {
+    	if(valor2==0) {
+    		return true;
+    	} return false;
+		
 		
     }
     public boolean validarEnteros (String valor1, String valor2 ) {
